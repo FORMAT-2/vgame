@@ -1,15 +1,34 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Layout } from './components/Layout';
 import { AppStage } from './types';
 import { HeartCatcher } from './components/HeartCatcher';
 import { MemoryMatch } from './components/MemoryMatch';
 import { WordScramble } from './components/WordScramble';
 import { GalleryView } from './components/GalleryView';
-import { ICONS } from './constants';
+import { ICONS, GALLERY_IMAGES, AUDIO_TRACKS } from './constants';
 
 const App: React.FC = () => {
   const [stage, setStage] = useState<AppStage>(AppStage.START);
+
+  // Determine which song to play based on the current stage
+  const currentTrack = useMemo(() => {
+    switch (stage) {
+      case AppStage.START:
+        return AUDIO_TRACKS.intro;
+      case AppStage.GAME_1:
+      case AppStage.GAME_2:
+      case AppStage.GAME_3:
+        return AUDIO_TRACKS.gameplay;
+      case AppStage.GALLERY_1:
+      case AppStage.GALLERY_2:
+      case AppStage.GALLERY_3:
+      case AppStage.FINAL:
+        return AUDIO_TRACKS.gallery;
+      default:
+        return AUDIO_TRACKS.intro;
+    }
+  }, [stage]);
 
   const renderStage = () => {
     switch (stage) {
@@ -42,7 +61,7 @@ const App: React.FC = () => {
         return (
           <GalleryView 
             context="catching hearts" 
-            images={['https://picsum.photos/seed/love1/600/400', 'https://picsum.photos/seed/love2/600/400']} 
+            images={GALLERY_IMAGES.STAGE_1} 
             onNext={() => setStage(AppStage.GAME_2)} 
           />
         );
@@ -54,7 +73,7 @@ const App: React.FC = () => {
         return (
           <GalleryView 
             context="matching romantic memories" 
-            images={['https://picsum.photos/seed/love3/600/400', 'https://picsum.photos/seed/love4/600/400']} 
+            images={GALLERY_IMAGES.STAGE_2} 
             onNext={() => setStage(AppStage.GAME_3)} 
           />
         );
@@ -66,7 +85,7 @@ const App: React.FC = () => {
         return (
           <GalleryView 
             context="unscrambling love letters" 
-            images={['https://picsum.photos/seed/love5/600/400', 'https://picsum.photos/seed/love6/600/400']} 
+            images={GALLERY_IMAGES.STAGE_3} 
             onNext={() => setStage(AppStage.FINAL)} 
           />
         );
@@ -99,7 +118,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout currentTrack={currentTrack}>
       {renderStage()}
     </Layout>
   );

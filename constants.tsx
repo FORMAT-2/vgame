@@ -19,6 +19,54 @@ export const ICONS = {
   Send: <Send className="w-5 h-5" />
 };
 
-export const AUDIO_TRACKS = {
-  background: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' // Placeholder romantic tune
+/**
+ * UPDATE YOUR IMAGES HERE
+ * Replace these URLs with your own photo links.
+ */
+export const GALLERY_IMAGES = {
+  STAGE_1: [
+    'https://picsum.photos/seed/love1/600/400', 
+    'https://picsum.photos/seed/love2/600/400'
+  ],
+  STAGE_2: [
+    'https://picsum.photos/seed/love3/600/400', 
+    'https://picsum.photos/seed/love4/600/400'
+  ],
+  STAGE_3: [
+    'https://picsum.photos/seed/love5/600/400', 
+    'https://picsum.photos/seed/love6/600/400'
+  ],
 };
+
+/**
+ * UPDATE YOUR SONGS HERE
+ * Replace these URLs with direct links to MP3 files.
+ */
+export const AUDIO_TRACKS = {
+  intro: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',      // Played at Start
+  gameplay: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',   // Played during games
+  gallery: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'     // Played during photos/messages
+};
+
+/**
+ * UPDATE YOUR ROMANTIC MESSAGES HERE
+ */
+export const ROMANTIC_MESSAGES = [
+  "You're the missing piece to my puzzle! ❤️",
+  "Every moment with you is a winning moment. ❤️",
+  "My heart beats faster every time I think of you. 💖",
+  "You're my favorite person in the whole wide world. 🌹",
+  "You make every day feel like Valentine's Day. ✨",
+  "I'm so lucky to have you by my side. 🥂",
+  "You are my sun, my moon, and all my stars. 🌟",
+  "Falling for you was the best thing I ever did. 💌"
+];
+
+/**
+ * UPDATE YOUR WORD SCRAMBLE SETS HERE
+ */
+export const SCRAMBLED_WORD_SETS = [
+  ["LOVE", "FOREVER", "SOULMATE", "ALWAYS", "DEVOTION"],
+  ["HEART", "CUPID", "KISS", "ROMANCE", "FLOWER"],
+  ["DARLING", "SWEETIE", "BELOVED", "ADORE", "CHERISH"]
+];

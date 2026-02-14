@@ -1,42 +1,65 @@
 
+import { GoogleGenAI, Type } from "@google/genai";
+import { ROMANTIC_MESSAGES, SCRAMBLED_WORD_SETS } from '../constants';
+
 /**
  * Static providers for romantic content.
- * Replaces the previous Gemini AI implementation to remove API key dependency.
+ * Pulls from constants.tsx for easier user configuration.
  */
 
-const ROMANTIC_MESSAGES = [
-  "You're the missing piece to my puzzle! ❤️",
-  "Every moment with you is a winning moment. ❤️",
-  "My heart beats faster every time I think of you. 💖",
-  "You're my favorite person in the whole wide world. 🌹",
-  "You make every day feel like Valentine's Day. ✨",
-  "I'm so lucky to have you by my side. 🥂",
-  "You are my sun, my moon, and all my stars. 🌟",
-  "Falling for you was the best thing I ever did. 💌"
-];
-
-const SCRAMBLED_WORD_SETS = [
-  ["LOVE", "FOREVER", "SOULMATE", "ALWAYS", "DEVOTION"],
-  ["HEART", "CUPID", "KISS", "ROMANCE", "FLOWER"],
-  ["DARLING", "SWEETIE", "BELOVED", "ADORE", "CHERISH"]
-];
-
+// Generate a dynamic romantic message using Gemini API
 export const generateRomanticMessage = async (context: string) => {
-  // Simulate network delay for a smoother UI experience
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  // Pick a random message or one based on context
-  if (context.includes("hearts")) return "You've caught my heart just like those falling ones! ❤️";
-  if (context.includes("memories")) return "Matching these was easy, but matching with you was fate. 💖";
-  if (context.includes("letters")) return "No matter how scrambled things get, my love for you is always clear. 💌";
-  
-  return ROMANTIC_MESSAGES[Math.floor(Math.random() * ROMANTIC_MESSAGES.length)];
+  try {
+    // Create instance right before call to ensure latest API key is used
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: `Generate a short, sweet, one-sentence romantic message for a Valentine's Day game. Context: ${context}`,
+      config: {
+        systemInstruction: "You are a romantic poet. Keep the message under 15 words. Be charming and sweet.",
+      },
+    });
+    
+    // Accessing the .text property directly as per Gemini API guidelines
+    const message = response.text;
+    return message?.trim() || ROMANTIC_MESSAGES[Math.floor(Math.random() * ROMANTIC_MESSAGES.length)];
+  } catch (error) {
+    console.error("Gemini Message Generation Error:", error);
+    // Fallback to static messages
+    return ROMANTIC_MESSAGES[Math.floor(Math.random() * ROMANTIC_MESSAGES.length)];
+  }
 };
 
+// Generate dynamic scrambled words using Gemini API with structured JSON output
 export const generateScrambledWords = async () => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  // Return a random set of romantic words
-  return SCRAMBLED_WORD_SETS[Math.floor(Math.random() * SCRAMBLED_WORD_SETS.length)];
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: "Generate 5 romantic words (4 to 10 characters long) for a word scramble game.",
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.STRING,
+          },
+        },
+      },
+    });
+
+    // Extracting and parsing the JSON response
+    const jsonStr = response.text?.trim();
+    if (jsonStr) {
+      const words = JSON.parse(jsonStr);
+      if (Array.isArray(words) && words.length > 0) {
+        return words;
+      }
+    }
+    return SCRAMBLED_WORD_SETS[Math.floor(Math.random() * SCRAMBLED_WORD_SETS.length)];
+  } catch (error) {
+    console.error("Gemini Word Generation Error:", error);
+    // Fallback to predefined word sets
+    return SCRAMBLED_WORD_SETS[Math.floor(Math.random() * SCRAMBLED_WORD_SETS.length)];
+  }
 };
