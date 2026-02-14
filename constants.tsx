@@ -43,7 +43,7 @@ export const GALLERY_IMAGES = {
  * Replace these URLs with direct links to MP3 files.
  */
 export const AUDIO_TRACKS = {
-  intro: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',      // Played at Start
+  intro: 'https://github.com/FORMAT-2/FORMAT-2/raw/refs/heads/main/HIGH%20ON%20YOU%20-%20Jind%20Universe%20%20Latest%20Punjabi%20Love%20Song%202024.mp3',      // Played at Start
   gameplay: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',   // Played during games
   gallery: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'     // Played during photos/messages
 };
