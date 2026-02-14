@@ -25,7 +25,7 @@ export const ICONS = {
  */
 export const GALLERY_IMAGES = {
   STAGE_1: [
-    'https://picsum.photos/seed/love1/600/400', 
+    'https://github.com/FORMAT-2/FORMAT-2/blob/main/ag.jpeg', 
     'https://picsum.photos/seed/love2/600/400'
   ],
   STAGE_2: [
