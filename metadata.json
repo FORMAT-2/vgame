@@ -1,0 +1,8 @@
+
+{
+  "name": "Valentine's Journey of Love",
+  "description": "An interactive Valentine's Day experience featuring romantic mini-games, dynamic AI-generated messages, and a beautiful photo gallery.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
